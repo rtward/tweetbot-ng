@@ -1,0 +1,17 @@
+# Twitter configuration
+module.exports.twitter = {
+    consumer_key:        '### GET FROM TWITTER ###',
+    consumer_secret:     '### GET FROM TWITTER ###',
+    access_token_key:    '### GET FROM TWITTER ###',
+    access_token_secret: '### GET FROM TWITTER ###',
+}
+
+# The maximum accepted command duration
+module.exports.maxDuration = 5
+
+# The amount to multiply the command duration by
+module.exports.durationMultiplier = 1000
+
+# The time to wait in between posting pictures
+module.exports.pictureInterval = 10000
+

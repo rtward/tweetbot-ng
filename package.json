@@ -1,0 +1,18 @@
+{
+  "name": "tweetbot-ng",
+  "description": "Runs a robot based on commands from twitter",
+  "version": "1.0.0",
+  "author": "Robert Ward <robert@rtward.com>",
+  "license": "MIT",
+  "main": "bot.coffee",
+  "repository": {
+      "type": "git",
+      "url": "git@github.com:rtward/tweetbot-ng.git"
+  },
+  "pre-commit": [],
+  "dependencies": {
+    "twitter": "^1.2.5",
+    "async":   "^1.2.0"
+  },
+  "devDependencies": {}
+}
