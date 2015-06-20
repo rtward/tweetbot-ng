@@ -11,8 +11,9 @@
   },
   "pre-commit": [],
   "dependencies": {
-    "twitter": "^1.2.5",
-    "async":   "^1.2.0"
+    "twitter":  "^1.2.5",
+    "async":    "^1.2.0",
+    "rpi-gpio": "^0.5.2"
   },
   "devDependencies": {}
 }
