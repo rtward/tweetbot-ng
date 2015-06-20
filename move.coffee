@@ -1,17 +1,53 @@
 async = require 'async'
 io    = require 'rpi-gpio'
 
-lightPin         = 12
-leftForwardPin   = 13
-leftBackwardPin  = 15
-rightForwardPin  = 7 
-rightBackwardPin = 11
+config = require './config'
 
-io.setup(lightPin, io.DIR_OUT, () -> console.log("Light pin set for output"))
-io.setup(7,        io.DIR_OUT, () -> console.log("Pin 7 set for output"))
-io.setup(11,       io.DIR_OUT, () -> console.log("Pin 11 set for output"))
-io.setup(13,       io.DIR_OUT, () -> console.log("Pin 13 set for output"))
-io.setup(15,       io.DIR_OUT, () -> console.log("Pin 15 set for output"))
+lightPin         = config.pins.light
+leftForwardPin   = config.pins.leftForward
+leftBackwardPin  = config.pins.leftBackward
+rightForwardPin  = config.pins.rightForward 
+rightBackwardPin = config.pins.rightBackward
+
+io.setup(lightPin, io.DIR_OUT,
+    (err) ->
+        if err
+            console.log("Error enabling light pin ("+lightPin+"): "+err)
+        else
+            console.log("Light pin set for output")
+)
+
+io.setup(leftForwardPin, io.DIR_OUT,
+    (err) ->
+        if err
+            console.log("Error enabling left forward pin ("+leftForwardPin+"): "+err)
+        else
+            console.log("Left forward pin ("+leftForwardPin+") set for output")
+)
+
+io.setup(leftBackwardPin, io.DIR_OUT,
+    (err) ->
+        if err
+            console.log("Error enabling left backward pin ("+leftBackwardPin+"): "+err)
+        else
+            console.log("Left backward pin set for output")
+)
+
+io.setup(rightForwardPin, io.DIR_OUT,
+    (err) ->
+        if err
+            console.log("Error enabling right forward pin ("+rightForwardPin+"): "+err)
+        else
+            console.log("Right forward pin set for output")
+)
+
+io.setup(rightBackwardPin, io.DIR_OUT,
+    (err) ->
+        if err
+            console.log("Error enabling right backward pin ("+rightBackwardPin+"): "+err)
+        else
+            console.log("Right backward pin set for output")
+)
 
 lightOn = (cb) ->
     io.write(lightPin, true, (err) ->
