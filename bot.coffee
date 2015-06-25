@@ -1,9 +1,10 @@
-twitter  = require 'twitter'
 readline = require 'readline'
 async    = require 'async'
 
-move   = require './move'
-config = require './config'
+move    = require  './move'
+config  = require  './config'
+twitter = require './twitter'
+cam     = require './camera'
 
 commandRegex = ///
     (
@@ -16,7 +17,7 @@ commandRegex = ///
     (\d+)
 ///img
 
-parseCommands = (text) ->
+parseCommands = (text,cb) ->
     # Find all the commands in the given text, and store them in the matches array
     matches = []
     while cmdMatch = commandRegex.exec(text)
@@ -44,38 +45,35 @@ parseCommands = (text) ->
             move.leftTurn(duration,cb)
         else if match[5]
             move.rightTurn(duration,cb)
-    )
+    () -> cb(matches.length))
 
-takePicture = () ->
+takePicture = (message) ->
     console.log("Taking a picture and posting it")
-
-    # TODO Actually take a picture
-
-    # After some interval, take another picture
-    setTimeout(takePicture,config.pictureInterval)
+    cam.get((filename) ->
+        console.log("Got photo at #{filename}")
+        twitter.post(message,filename,() -> "Picture posted")
+    )
 
 # Read input from the command line
 terminal = readline.createInterface({
     input:  process.stdin,
     output: process.stdout
 })
-terminal.on('line', (line) ->
+terminal.on 'line', (line) ->
     console.log("Parsing input from STDIN: "+line)
     parseCommands(line)
-)
 
 # Read input from twitter
-twitter = new twitter(config.twitter)
-twitter.stream('user', {}, (stream) ->
-    stream.on('data', (tweet) ->
-        console.log("Parsing input from Twitter: "+tweet.text)
-        parseCommands(tweet.text)
-    )
+twitter.stream (tweet) ->
+    fromUser = tweet?.user?.screen_name
 
-    stream.on('error', (error) ->
-        throw error
-    )
-)
+    if fromUser and fromUser != 'tweetmybot'
+        console.log("Parsing input from Twitter: "+tweet?.text)
 
-# Start taking pictures
-takePicture()
+        parseCommands(tweet.text,(cmds) ->
+            if cmds > 0
+                takePicture("Okay @#{fromUser}, where to next?")
+            else
+                if fromUser
+                    takePicture("Sorry @#{fromUser} I didn't understand that, try a command like FORWARD 1")
+        )
