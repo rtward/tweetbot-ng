@@ -30,7 +30,7 @@ io.setup(leftBackwardPin, io.DIR_OUT,
         if err
             console.log("Error enabling left backward pin ("+leftBackwardPin+"): "+err)
         else
-            console.log("Left backward pin set for output")
+            console.log("Left backward pin ("+leftBackwardPin+") set for output")
 )
 
 io.setup(rightForwardPin, io.DIR_OUT,
@@ -38,7 +38,7 @@ io.setup(rightForwardPin, io.DIR_OUT,
         if err
             console.log("Error enabling right forward pin ("+rightForwardPin+"): "+err)
         else
-            console.log("Right forward pin set for output")
+            console.log("Right forward pin ("+rightForwardPin+") set for output")
 )
 
 io.setup(rightBackwardPin, io.DIR_OUT,
@@ -46,7 +46,7 @@ io.setup(rightBackwardPin, io.DIR_OUT,
         if err
             console.log("Error enabling right backward pin ("+rightBackwardPin+"): "+err)
         else
-            console.log("Right backward pin set for output")
+            console.log("Right backward pin ("+rightBackwardPin+") set for output")
 )
 
 lightOn = (cb) ->
