@@ -144,8 +144,8 @@ module.exports.goBackwards = (duration,cb) ->
     runCmds([leftBack,rightBack],duration,cb)
 
 module.exports.leftTurn = (duration,cb) ->
-    runCmds([leftBack],duration,cb)
+    runCmds([leftBack,rightFwd],duration,cb)
         
 module.exports.rightTurn = (duration,cb) ->
-    runCmds([rightBack],duration,cb)
+    runCmds([rightBack,leftFwd],duration,cb)
 
